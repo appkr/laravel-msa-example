@@ -12,17 +12,18 @@
 
 - ① API Client는 `web_app/changeit` 사용자 계정과 Password Grant를 이용하여 OAuth2 Server로부터 `JWT(Json Web Token)`를 발급 받는다
   - ② API Client는 발급 받은 JWT로 라라벨로 만든 마이크로서비스의 보호된 API 리소스를 조회, 변경할 수 있다
-  - 서버는 `JWT`의 `userId` 클레임의 값을 API 리소스의 `created_at`, `updated_at`의 값으로 사용한다
+  - 서버는 `JWT`의 `user_name` 클레임의 값을 API 리소스의 `created_at`, `updated_at`의 값으로 사용한다
   - API Client가 제출한 토큰이 유효하지 않을 때 서버는 예외 응답을 제공한다
-```json
-curl -L -X POST 'http://localhost:9999/oauth/token' \
--H 'Content-Type: application/x-www-form-urlencoded' \
--H 'Accept: application/json' \
--H 'Authorization: Basic  d2ViX2FwcDpjaGFuZ2VpdA==' \
---data-urlencode 'grant_type=password' \
---data-urlencode 'username=user' \
---data-urlencode 'password=user' \
---data-urlencode 'scope=openid'
+```bash
+# Password Grant로 OAuth2 Server로부터 JWT 얻기
+$ curl -L -X POST 'http://localhost:9999/oauth/token' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Basic  d2ViX2FwcDpjaGFuZ2VpdA==' \
+  --data-urlencode 'grant_type=password' \
+  --data-urlencode 'username=user' \
+  --data-urlencode 'password=user' \
+  --data-urlencode 'scope=openid'
 
 {
   "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ1c2VyIiwic2NvcGUiOlsib3BlbmlkIl0sImV4cCI6MTYxMjQ5ODAyMywiaWF0IjoxNjEyNDk3NzIzLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiREJmM0g0NHRlVFhOVmNEWjBBeWJTQUY3dFBZIiwiY2xpZW50X2lkIjoid2ViX2FwcCJ9.Y4py8MMHJdMwbXxpocdQPrMEevRnl2nkEUuXw6UeRmtB7qWDFADmzO-xQz8Hkvmz2LT0U4gPSHvRSOEWGuZ_Nack8MRU7ICWGRl53WZyiPTzt7ucLcO0w1eOBUPFxsHQHffyZ4XzrDJWlqWadhzlnxw9oJUcvi8aAKkBtBSVOCslxYMkBNzs7vjxbLHNQIAjZbb1YetBzpAQOq8RJCdSQNDcMSZ9eZG705ucaFBv3LgDf5sxK47Yqqqk3oCMDdyMXB2MW2bsFivpf6BZd3ydfHrCgcrU5y2Vl2g6fG6PsADkaJ4Fv31UdVj0QG-kX8fgj9GL7MjZUyI-bWruiLNTgw",
@@ -37,8 +38,9 @@ curl -L -X POST 'http://localhost:9999/oauth/token' \
 
 - 라라벨로 만든 마이크로서비스는 `internal/internal` 클라이언트 계정과 ClientCredentials Grant를 이용하여 OAuth2 Server로 부터 `JWT`를 발급 받는다
   - ③ 라라벨로 만든 마이크로서비스는 발급 받은 JWT로 다른 프레임워크로 만든 마이크로서비스의 보호된 API 리소스를 조회, 변경할 수 있다
-```json
-curl -L -X POST 'http://localhost:9999/oauth/token?grant_type=client_credentials' \
+```bash
+# ClientCredentials Grant로 OAuth2 Server로부터 JWT 얻기
+$ curl -L -X POST 'http://localhost:9999/oauth/token?grant_type=client_credentials' \
 -H 'Content-Type: application/x-www-form-urlencoded' \
 -H 'Accept: application/json' \
 -H 'Authorization: Basic  aW50ZXJuYWw6aW50ZXJuYWw='
@@ -54,7 +56,8 @@ curl -L -X POST 'http://localhost:9999/oauth/token?grant_type=client_credentials
 ```
 
 - ④ 라라벨로 만든 마이크로서비스는 OAuth2 Server가 제공하는 키를 이용하여 API Client가 제출한 JWT의 유효성을 검증한다
-```json
+```bash
+# OAuth2 Server로부터 JWT 검증을 위한 키 조회하기
 curl -L -X GET 'http://localhost:9999/oauth/token_key'
 {
     "alg": "SHA256withRSA",
@@ -62,3 +65,26 @@ curl -L -X GET 'http://localhost:9999/oauth/token_key'
 }
 ```
 
+발급 받은 토큰과 키를 [jwt.io](https://jwt.io/)에 제출해서 디코드해보면 아래와 같다
+
+<table>
+  <tr>
+    <th>Password Grant로 얻은 JWT</th>
+    <th>ClientCredentials Grant로 얻은 JWT</th>
+  </tr>
+  <tr>
+    <td><img src="password.png" alt="" style="max-width: 300px; margin-left: auto; margin-right: auto;"></td>
+    <td><img src="client_credentials.png" alt="" style="max-width: 300px; margin-left: auto; margin-right: auto;"></td>
+  </tr>
+</table>
+
+---
+
+### 프로젝트 실행
+
+```json
+$ cp .env.example .env
+$ docker-compose -f docker/docker-compose.yml up -d
+$ docker exec -it laravel composer install
+$ open http://localhost:8000
+```
