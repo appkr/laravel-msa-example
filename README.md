@@ -8,7 +8,7 @@
 
 ### 요건
 
-![](laravel-msa-demo.png)
+![](docs/laravel-msa-demo.png)
 
 - ① API Client는 `web_app/changeit` 사용자 계정과 Password Grant를 이용하여 OAuth2 Server로부터 `JWT(Json Web Token)`를 발급 받는다
   - ② API Client는 발급 받은 JWT로 라라벨로 만든 마이크로서비스의 보호된 API 리소스를 조회, 변경할 수 있다
@@ -73,10 +73,14 @@ curl -L -X GET 'http://localhost:9999/oauth/token_key'
     <th>ClientCredentials Grant로 얻은 JWT</th>
   </tr>
   <tr>
-    <td><img src="password.png" alt="" style="max-width: 300px; margin-left: auto; margin-right: auto;"></td>
-    <td><img src="client_credentials.png" alt="" style="max-width: 300px; margin-left: auto; margin-right: auto;"></td>
+    <td><img src="docs/password.png" alt="" style="max-width: 300px; margin-left: auto; margin-right: auto;"></td>
+    <td><img src="docs/client_credentials.png" alt="" style="max-width: 300px; margin-left: auto; margin-right: auto;"></td>
   </tr>
 </table>
+
+요건을 시퀀스 다이어그램으로 표현하면 아래와 같다
+
+![](docs/sequence.svg)
 
 ---
 

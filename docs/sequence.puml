@@ -1,0 +1,44 @@
+@startuml
+
+actor APIClient as a
+participant OAuth2Server as b
+participant Laravel as c
+participant nonLaravel as d
+
+== Password Grant ==
+
+autonumber
+a -> b: 로그인 with UserName & Password ①
+activate a
+activate b
+return: JWT
+deactivate a
+
+autonumber
+a -> c: 리소스 요청 with JWT ②
+activate a
+activate c
+c -> b: RS256 Public Key 요청 ④
+activate b
+return: RS256 Public Key
+c -> c: 토큰 유효성 검사 ④
+return: 리소스
+deactivate a
+
+== ClientCredentials Grant ==
+
+autonumber
+c -> b: 로그인 with ClientId & ClientSecret
+activate c
+activate b
+return JWT
+deactivate c
+
+autonumber
+c -> d: 리소스 요청 with JWT ③
+activate c
+activate d
+d -> d: 토큰 유효성 검사 ④
+return 리소스
+
+@enduml
