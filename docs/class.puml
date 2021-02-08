@@ -1,0 +1,42 @@
+@startuml
+
+class TokenAuthenticate <<HTTP middleware>> {
+  + handle(Request): Closure
+}
+
+class TokenExtractor {
+  + {static} extract(Request): String
+}
+
+class TokenParser {
+  + parse(String): Token
+}
+
+interface TokenKeyProvider {
+  + getKey(): String
+}
+
+class UaaTokenKeyProvider implements TokenKeyProvider {
+  - httpClient: GuzzleClient
+}
+
+class CacheableTokenKeyProvider implements TokenKeyProvider {
+  - delegate: TokenKeyProvider
+  - cacheRepository: Repository
+}
+
+class Token {
+  + {static} fromTokenString(String): Token
+}
+
+class JWT <<ext library>> {
+  + {static} decode(): stdClass
+}
+
+TokenAuthenticate --> TokenExtractor
+TokenAuthenticate --> TokenParser
+TokenParser --> Token
+TokenParser --> TokenKeyProvider
+Token --> JWT
+
+@enduml
