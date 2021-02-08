@@ -9,6 +9,7 @@ use Appkr\Infra\TokenParser;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class TokenAuthenticate
 {
@@ -31,7 +32,7 @@ class TokenAuthenticate
 
         $request->setUserResolver(function () use ($token) {
             $user = new User();
-            $user->name = $token->getUserName();
+            $user->name = ($token->getUserName() instanceof Uuid) ? $token->getUserName() : Uuid::fromString(Uuid::NIL);
             return $user;
         });
 

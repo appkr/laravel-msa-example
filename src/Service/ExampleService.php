@@ -27,14 +27,15 @@ class ExampleService
 
         $title = $dto->getTitle();
         if ($title != null) {
-            $now = Carbon::now();
-            $user = Uuid::uuid4();
             $example->title = $title;
-            $example->created_at = $now;
-            $example->updated_at = $now;
-            $example->created_by = $user;
-            $example->updated_by = $user;
         }
+
+        $now = Carbon::now();
+        $user = Uuid::uuid4();
+        $example->created_at = $now;
+        $example->updated_at = $now;
+        $example->created_by = $dto->getUpdatedBy();
+        $example->updated_by = $dto->getUpdatedBy();
 
         DB::transaction(function () use ($example) {
             return $example->save();

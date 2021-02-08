@@ -13,7 +13,12 @@ abstract class AbstractRequest extends FormRequest
         $mapper = new \JsonMapper();
         $json = json_decode(json_encode($this->all()));
 
-        return $mapper->map((object)$json, $this->getDtoClass());
+        $dto = $mapper->map((object)$json, $this->getDtoClass());
+        if (property_exists($dto, 'updatedBy') && $this->user()) {
+            $dto->setUpdatedBy($this->user()->name);
+        }
+
+        return $dto;
     }
 
     public function authorize(): bool
