@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\JhipsterUaaServiceProvider::class,
 
         /*
          * Application Service Providers...
