@@ -13,7 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class UaaTokenProvider implements TokenProvider
 {
-    public static $TOKEN_PATH = '/oauth/token';
+    const TOKEN_PATH = '/oauth/token';
 
     private $httpClient;
     private $config;
@@ -33,7 +33,7 @@ class UaaTokenProvider implements TokenProvider
 
     public function getTokenResponse(): TokenResponse
     {
-        $request = new Request('POST', self::$TOKEN_PATH, [
+        $request = new Request('POST', self::TOKEN_PATH, [
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => "basic {$this->getBasicAuthHeader()}"
         ], Query::build([
@@ -47,6 +47,25 @@ class UaaTokenProvider implements TokenProvider
 
         return TokenResponse::fromJsonString($response->getBody(), $this->tokenKeyProvider->getKey());
     }
+
+//    NOTE. A token acquired from ClientCredentials cannot be refreshed
+//    public function refresh(): TokenResponse
+//    {
+//        $request = new Request('POST', self::TOKEN_PATH, [
+//            'Content-Type' => 'application/x-www-form-urlencoded',
+//            'Authorization' => "basic {$this->getBasicAuthHeader()}"
+//        ], Query::build([
+//            'grant_type' => 'refresh_token',
+//            'refresh_token' => $this->getTokenResponse()->getRefreshToken()->getTokenString(),
+//        ]));
+//        $response = new Response();
+//        try {
+//            $response = $this->httpClient->sendRequest($request);
+//        } catch (ClientExceptionInterface $e) {
+//        }
+//
+//        return TokenResponse::fromJsonString($response->getBody(), $this->tokenKeyProvider->getKey());
+//    }
 
     private function getBasicAuthHeader(): string
     {

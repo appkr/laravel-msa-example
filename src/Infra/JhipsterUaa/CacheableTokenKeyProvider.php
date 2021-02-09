@@ -7,8 +7,8 @@ use Illuminate\Contracts\Cache\Repository;
 
 class CacheableTokenKeyProvider implements TokenKeyProvider
 {
-    public static $CACHE_KEY = 'jhipster_uaa.token_key';
-    public static $CACHE_TTL_SECONDS = 60 * 60 * 24; // 24시간
+    const CACHE_KEY = 'jhipster_uaa.token_key';
+    const CACHE_TTL_SECONDS = 60 * 60 * 24; // 24시간
 
     private $delegate;
     private $cacheRepository;
@@ -27,7 +27,7 @@ class CacheableTokenKeyProvider implements TokenKeyProvider
     public function getTokenKey(): TokenKeyResponse
     {
         $self = $this;
-        return $this->cacheRepository->remember(self::$CACHE_KEY, self::$CACHE_TTL_SECONDS, function () use ($self) {
+        return $this->cacheRepository->remember(self::CACHE_KEY, self::CACHE_TTL_SECONDS, function () use ($self) {
             return $self->delegate->getTokenKey();
         });
     }

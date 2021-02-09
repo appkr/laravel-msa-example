@@ -19,7 +19,7 @@ class TokenResponse
         Token $accessToken = null,
         string $tokenType = null,
         Token $refreshToken = null,
-        int $expiresIn = null,
+        Carbon $expiresIn = null,
         array $scope = null,
         Carbon $iat = null,
         string $jti = null
@@ -46,7 +46,7 @@ class TokenResponse
             $response->refreshToken = Token::fromTokenString($decoded->refresh_token, $publicKey);
         }
         $response->tokenType = $decoded->token_type;
-        $response->expiresIn = intval($decoded->expires_in);
+        $response->expiresIn = Carbon::createFromTimestamp(intval($decoded->expires_in));
         $response->scope = preg_split('/,\s?/', $decoded->scope);
         $response->iat = Carbon::createFromTimestamp($decoded->iat);
         $response->jti = $decoded->jti;
@@ -69,7 +69,7 @@ class TokenResponse
         return $this->refreshToken;
     }
 
-    public function getExpiresIn(): int
+    public function getExpiresIn(): Carbon
     {
         return $this->expiresIn;
     }
