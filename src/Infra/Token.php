@@ -7,6 +7,7 @@ use Firebase\JWT\JWT;
 
 class Token
 {
+    private $tokenString;
     private $userName;
     private $scope;
     private $exp;
@@ -38,6 +39,7 @@ class Token
         $decoded = JWT::decode($tokenString, $publicKey, ['RS256']);
 
         $token = new static();
+        $token->tokenString = $tokenString;
         $token->userName = $decoded->user_name ?? null;
         $token->scope = $decoded->scope ?? [];
         $token->exp = Carbon::createFromTimestamp($decoded->exp ?? null);
@@ -47,6 +49,11 @@ class Token
         $token->clientId = $decoded->client_id ?? null;
 
         return $token;
+    }
+
+    public function getTokenString()
+    {
+        return $this->tokenString;
     }
 
     public function getUserName(): ?string
