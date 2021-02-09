@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class ExternalApiClient
+class HelloApiClient
 {
     private $httpClient;
     private $tokenProvider;

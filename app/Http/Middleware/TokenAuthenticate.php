@@ -23,7 +23,11 @@ class TokenAuthenticate
     public function handle(Request $request, Closure $next)
     {
         try {
-            $token = $this->tokenParser->parse(TokenExtractor::extract($request));
+            $jwtString = TokenExtractor::extract($request);
+            if (!$jwtString) {
+                throw TokenException::tokenNotProvided();
+            }
+            $token = $this->tokenParser->parse($jwtString);
         } catch (TokenException $e) {
             return new JsonResponse(['message' => $e->getMessage(),], $e->getStatusCode());
         } catch (\Exception $e) {

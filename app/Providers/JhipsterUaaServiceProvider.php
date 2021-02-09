@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Appkr\Infra\JhipsterUaa\CacheableTokenKeyProvider;
+use Appkr\Infra\JhipsterUaa\CacheableTokenProvider;
 use Appkr\Infra\JhipsterUaa\UaaTokenKeyProvider;
 use Appkr\Infra\JhipsterUaa\UaaTokenProvider;
 use Appkr\Infra\TokenKeyProvider;
@@ -59,7 +60,7 @@ class JhipsterUaaServiceProvider extends ServiceProvider
             $cacheRepository = $app->make(CacheRepository::class);
 
 
-            return new CacheableTokenKeyProvider($innerProvider, $cacheRepository);
+            return new CacheableTokenProvider($innerProvider, $cacheRepository);
         });
     }
 }
