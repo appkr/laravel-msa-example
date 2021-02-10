@@ -16,6 +16,47 @@ class TokenProviderTest extends TestCase
     private $sut;
 
     /**
+     * @when getTokenResponse() is called
+     * @then TokenResponse object is returned
+     */
+    public function testGetTokenResponse(): void
+    {
+        $tokenResponse = $this->sut->getTokenResponse();
+
+        echo $tokenResponse, PHP_EOL;
+        // TokenResponse (
+        //    accessToken=Token (
+        //        userName=user
+        //        scope=openid
+        //        exp=2031-02-03T02:01:47+00:00
+        //        iat=2021-02-05T02:01:47+00:00
+        //        authorities=ROLE_USER
+        //        jti=t1HSMphEcOdKHAKkNvV6JojcpEc
+        //        clientId=web_app
+        //    )
+        //    refreshToken=Token (
+        //        userName=user
+        //        scope=openid
+        //        exp=2031-02-03T02:01:47+00:00
+        //        iat=2021-02-05T02:01:47+00:00
+        //        authorities=ROLE_USER
+        //        jti=4gY4lkQ8aVb4BSr17wELHa3p5ws
+        //        clientId=web_app
+        //    )
+        //    tokenType=bearer
+        //    expiresIn=1979-12-29 23:59:59
+        //    scope=openid
+        //    iat=2021-02-05T02:01:47+00:00
+        //    jti=t1HSMphEcOdKHAKkNvV6JojcpEc
+        //)
+
+        echo $tokenResponse->getAccessToken()->getTokenString(), PHP_EOL;
+        // eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ1c2VyIiwic2NvcGUiOlsib3BlbmlkIl0sImV4cCI6MTkyNzg1MDUwNywiaWF0IjoxNjEyNDkwNTA3LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoidDFIU01waEVjT2RLSEFLa052VjZKb2pjcEVjIiwiY2xpZW50X2lkIjoid2ViX2FwcCJ9.dWWjgZvxggWqHepSGp0i-NXVsL7ZzUQXSYxUDxDHUl9zTtgc0KMVVGRJr41o8Gk7gc7ccHEaRuInyqir2f4-d2BUIbhFn98ZumcSvFBrHH0HTptah6waKXXr_5PtXT-bqwTcIhuJpXNNwNE9czLzd3BpKKgc8U0HlryUGjqfzFTyJpzIcxghlSYT5tzpRkbmKC9v8SgtuRL7epp-P-MWT-_WER-LCeYvGhrI9_GHRtZcbat0NMpWzVTEqMyn2KN6AEfAQZ9kaGReO-KcpiKqWC-iOS_0JBcS17QSJLDA-n4O5yrroa9s-ihbUaqnSmOjuyXFaoXAbtEqlchk5fuzPQ
+
+        self::assertTrue(true);
+    }
+
+    /**
      * @before
      */
     public function setUp(): void
@@ -35,13 +76,5 @@ class TokenProviderTest extends TestCase
         $mockTokenKeyProvider = new UaaTokenKeyProvider($client2);
 
         $this->sut = new UaaTokenProvider($client1, ['client_id' => '', 'client_secret' => ''], $mockTokenKeyProvider);
-    }
-
-    public function testGetToken(): void
-    {
-        $tokenResponse = $this->sut->getTokenResponse();
-        echo $tokenResponse, PHP_EOL;
-        echo $tokenResponse->getAccessToken()->getTokenString(), PHP_EOL;
-        self::assertTrue(true);
     }
 }
