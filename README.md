@@ -86,9 +86,22 @@ curl -L -X GET 'http://localhost:9999/oauth/token_key'
 
 ### 프로젝트 실행
 
-```json
+```bash
 $ cp .env.example .env
 $ docker-compose -f docker/docker-compose.yml up -d
 $ docker exec -it laravel composer install
 $ open http://localhost:8000
+```
+
+### 작동 실험 ①
+
+```bash
+$ RESPONSE=$(curl -s -X POST --data "username=user&password=user&grant_type=password&scope=openid" http://web_app:changeit@localhost:9999/oauth/token)
+$ ACCESS_TOKEN=$(echo $RESPONSE | jq .access_token | xargs)
+```
+
+### 작동 실험 ②
+
+```bash
+$ curl -s -H 'Accept:application/json' -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8000/api/examples
 ```

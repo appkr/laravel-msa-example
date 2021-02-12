@@ -16,7 +16,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 
-class JhipsterUaaServiceProvider extends ServiceProvider
+class OAuth2ServiceProvider extends ServiceProvider
 {
     public function register()
     {
@@ -28,12 +28,12 @@ class JhipsterUaaServiceProvider extends ServiceProvider
     private function registerTokenKeyProvider()
     {
         $this->app->bind(TokenKeyProvider::class, function (Application $app) {
-            $config = $app->make(ConfigRepository::class)->get('jhipster_uaa');
+            $config = $app->make(ConfigRepository::class)->get('oauth2.jhipster');
             $httpClient = new GuzzleClient([
                 'base_uri' => Arr::get($config, 'base_uri'),
                 'timeout' => 0,
             ]);
-            $innerProvider = new UaaTokenKeyProvider($httpClient);
+            $innerProvider = new UaaTokenKeyProvider($httpClient, $config);
             $cacheRepository = $app->make(CacheRepository::class);
 
             return new CacheableTokenKeyProvider($innerProvider, $cacheRepository);
@@ -50,7 +50,7 @@ class JhipsterUaaServiceProvider extends ServiceProvider
     private function registerTokenProvider()
     {
         $this->app->bind(TokenProvider::class, function (Application $app) {
-            $config = $app->make(ConfigRepository::class)->get('jhipster_uaa');
+            $config = $app->make(ConfigRepository::class)->get('oauth2.jhipster');
             $httpClient = new GuzzleClient([
                 'base_uri' => Arr::get($config, 'base_uri'),
                 'timeout' => 0,

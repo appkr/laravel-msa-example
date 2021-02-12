@@ -34,6 +34,16 @@ class Token
         $this->clientId = $clientId;
     }
 
+    /**
+     * @param string $tokenString
+     * @param string $publicKey
+     * @throws \Firebase\JWT\UnexpectedValueException     Provided JWT was invalid
+     * @throws \Firebase\JWT\SignatureInvalidException    Provided JWT was invalid because the signature verification failed
+     * @throws \Firebase\JWT\BeforeValidException         Provided JWT is trying to be used before it's eligible as defined by 'nbf'
+     * @throws \Firebase\JWT\BeforeValidException         Provided JWT is trying to be used before it's been created as defined by 'iat'
+     * @throws \Firebase\JWT\ExpiredException             Provided JWT has since expired, as defined by the 'exp' claim
+     * @return Token
+     */
     public static function fromTokenString(string $tokenString, string $publicKey): Token
     {
         $decoded = JWT::decode($tokenString, $publicKey, ['RS256']);

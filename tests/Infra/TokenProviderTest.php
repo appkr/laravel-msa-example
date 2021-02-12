@@ -73,7 +73,7 @@ class TokenProviderTest extends TestCase
         ]);
         $handlerStack2 = HandlerStack::create($mockHandler2);
         $client2 = new GuzzleClient(['handler' => $handlerStack2]);
-        $mockTokenKeyProvider = new UaaTokenKeyProvider($client2);
+        $mockTokenKeyProvider = new UaaTokenKeyProvider($client2, []);
 
         $this->sut = new UaaTokenProvider($client1, ['client_id' => '', 'client_secret' => ''], $mockTokenKeyProvider);
     }

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Cache\Repository;
 
 class CacheableTokenProvider implements TokenProvider
 {
-    const CACHE_KEY = 'jhipster_uaa.token';
+    const CACHE_KEY = 'oauth2.token';
     const REFRESH_GRACE_PERIOD = 30; // 30초
 
     private $delegate;

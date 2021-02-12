@@ -13,8 +13,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class UaaTokenProvider implements TokenProvider
 {
-    const TOKEN_PATH = '/oauth/token';
-
     private $httpClient;
     private $config;
     private $tokenKeyProvider;
@@ -33,7 +31,7 @@ class UaaTokenProvider implements TokenProvider
 
     public function getTokenResponse(): TokenResponse
     {
-        $request = new Request('POST', self::TOKEN_PATH, [
+        $request = new Request('POST', Arr::get($this->config, 'access_token_path'), [
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => "basic {$this->getBasicAuthHeader()}"
         ], Query::build([

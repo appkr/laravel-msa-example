@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-        App\Providers\JhipsterUaaServiceProvider::class,
+        App\Providers\OAuth2ServiceProvider::class,
 
         /*
          * Application Service Providers...

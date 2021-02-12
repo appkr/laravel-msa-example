@@ -42,6 +42,6 @@ LwFPtQFxqIQrjjiWcI61vvTxtor4zI5r4X6aDteYIJidAzYwkIiuacnLWX5ziL3j
         ]);
         $handlerStack = HandlerStack::create($mock);
         $client = new GuzzleClient(['handler' => $handlerStack]);
-        $this->sut = new UaaTokenKeyProvider($client);
+        $this->sut = new UaaTokenKeyProvider($client, []);
     }
 }
