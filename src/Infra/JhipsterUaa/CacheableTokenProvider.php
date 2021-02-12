@@ -22,9 +22,9 @@ class CacheableTokenProvider implements TokenProvider
 
     public function getToken(): string
     {
-        if ($this->isTokenExpired()) {
-            $this->refresh();
-        }
+//        if ($this->isTokenExpired()) {
+//            $this->refresh();
+//        }
 
         return $this->getTokenResponse()->getAccessToken()->getTokenString();
     }

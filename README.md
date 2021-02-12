@@ -105,3 +105,10 @@ $ ACCESS_TOKEN=$(echo $RESPONSE | jq .access_token | xargs)
 ```bash
 $ curl -s -H 'Accept:application/json' -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8000/api/examples
 ```
+
+### 작동 실험 ③
+
+```bash
+~/laravel-msa-example/hello-service $ ./gradlew clean bootRun
+$ curl -s -H 'Accept:application/json' -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8000/api/hello
+```

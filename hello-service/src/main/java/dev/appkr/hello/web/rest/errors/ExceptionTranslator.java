@@ -5,7 +5,6 @@ import io.github.jhipster.web.util.HeaderUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindingResult;
@@ -128,19 +127,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
                         .map(this::toProblem)
                         .orElse(null));
             }
-    
-            if (throwable instanceof DataAccessException) {
-                return Problem.builder()
-                    .withType(type)
-                    .withTitle(status.getReasonPhrase())
-                    .withStatus(status)
-                    .withDetail("Failure during data access")
-                    .withCause(Optional.ofNullable(throwable.getCause())
-                        .filter(cause -> isCausalChainsEnabled())
-                        .map(this::toProblem)
-                        .orElse(null));
-            }
-    
+
             if (containsPackageName(throwable.getMessage())) {
                 return Problem.builder()
                     .withType(type)

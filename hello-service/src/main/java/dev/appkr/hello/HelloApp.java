@@ -21,13 +21,21 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @ComponentScan(
     excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = OAuth2InterceptedFeignConfiguration.class)
 )
 @SpringBootApplication
 @EnableConfigurationProperties({ApplicationProperties.class})
+@RestController
 public class HelloApp {
+
+    @GetMapping(path = "/hello")
+    public String hello() {
+        return "Hello from non-laravel service";
+    }
 
     private static final Logger log = LoggerFactory.getLogger(HelloApp.class);
 
