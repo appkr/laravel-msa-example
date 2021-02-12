@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "dev.appkr.hello"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "microservice",
+    "baseName": "hello",
+    "packageName": "dev.appkr.hello",
+    "packageFolder": "dev/appkr/hello",
+    "serverPort": "8080",
+    "authenticationType": "uaa",
+    "uaaBaseName": "uaa",
+    "cacheProvider": "no",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "no",
+    "devDatabaseType": "no",
+    "prodDatabaseType": "no",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MDQzN2ZiYzdmYzFhZTZhMDJmNmRhNTA2NWM0NDQ1YzRhNTRjZTgyMGY2ZjY1NjFlMTAxMTY3MjNmNGY0MDdkMzExZjA0MTcwNWJhMzI5NjZlMzk5NzEzN2U4ZGRmODZjN2Q5NjgyMGZhMmY3ODY2NjhhNzk3OGU1ZGQ2MGE0NmI=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1613097197548,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
