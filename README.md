@@ -112,3 +112,14 @@ $ curl -s -H 'Accept:application/json' -H "Authorization: bearer ${ACCESS_TOKEN}
 ~/laravel-msa-example/hello-service $ ./gradlew clean bootRun
 $ curl -s -H 'Accept:application/json' -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8000/api/hello
 ```
+
+---
+
+### Domain Example
+
+Singer, Song, Album 도메인을 만드는 예제 프로젝트
+
+![](https://raw.githubusercontent.com/appkr/msa-starter-example/master/docs/class.svg)
+
+- To download postman collection click [https://www.getpostman.com/collections/652dbeb6e1757b9db44d](https://www.getpostman.com/collections/652dbeb6e1757b9db44d)
+- For companion project developed in SpringBoot @see [https://github.com/appkr/msa-starter-example](https://github.com/appkr/msa-starter-example)
