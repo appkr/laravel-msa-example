@@ -2,9 +2,11 @@
 
 namespace Appkr\Model;
 
+use Appkr\Service\Dto\SongDto;
 use Database\Factories\SongFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -25,6 +27,17 @@ class Song extends Model
 {
     use HasFactory;
 
+    public static function from(SongDto $dto): Song
+    {
+        $entity = new static();
+        $entity->title = $dto->getTitle();
+        $entity->play_time = $dto->getPlayTime();
+        $entity->created_by = $dto->getUpdatedBy();
+        $entity->updated_by = $dto->getUpdatedBy();
+
+        return $entity;
+    }
+
     protected static function newFactory()
     {
         return SongFactory::new();
@@ -38,5 +51,15 @@ class Song extends Model
     public function singer()
     {
         return $this->belongsTo(Singer::class);
+    }
+
+    public function getCreatedByAttribute(string $value)
+    {
+        return Uuid::fromString($value);
+    }
+
+    public function getUpdatedByAttribute(string $value)
+    {
+        return Uuid::fromString($value);
     }
 }
