@@ -17,18 +17,18 @@ Route::prefix('hello')->middleware(TokenAuthenticate::class)->group(function () 
     Route::get('/', [HelloController::class, 'hello']);
 });
 
-Route::prefix('albums')->group(function () {
+Route::prefix('albums')->middleware(TokenAuthenticate::class)->group(function () {
     Route::post('/', [AlbumController::class, 'createAlbum']);
     Route::get('/', [AlbumController::class, 'listAlbums']);
     Route::post('/{albumId}/songs/{songId}', [AlbumController::class, 'associateSong']);
     Route::post('/{albumId}/singer/{singerId}', [AlbumController::class, 'associateSinger']);
 });
 
-Route::prefix('singers')->group(function () {
+Route::prefix('singers')->middleware(TokenAuthenticate::class)->group(function () {
     Route::post('/', [SingerController::class, 'createSinger']);
 });
 
-Route::prefix('songs')->group(function () {
+Route::prefix('songs')->middleware(TokenAuthenticate::class)->group(function () {
     Route::post('/', [SongController::class, 'createSong']);
     Route::get('/{songId}', [SongController::class, 'getSong']);
 
