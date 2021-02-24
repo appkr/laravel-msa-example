@@ -4,6 +4,7 @@ namespace Appkr\Service\Mapper;
 
 use Appkr\Model\Song;
 use Appkr\Service\Dto\SongDto;
+use Illuminate\Support\Collection;
 
 class SongMapper
 {
@@ -18,5 +19,12 @@ class SongMapper
             $entity->created_by,
             $entity->updated_by
         );
+    }
+
+    public function toDtos(Collection $songs)
+    {
+        return $songs->map(function ($song) {
+            return $this->toDto($song);
+        });
     }
 }

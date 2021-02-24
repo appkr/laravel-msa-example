@@ -2,10 +2,12 @@
 
 namespace Appkr\Model;
 
+use Appkr\Service\Dto\AlbumDto;
 use Database\Factories\AlbumFactory;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -20,11 +22,22 @@ use Ramsey\Uuid\UuidInterface;
  * @property UuidInterface $created_by
  * @property UuidInterface $updated_by
  * @property Singer $singer
- * @property Song[] $songs
+ * @property Collection|Song[] $songs
  */
 class Album extends Model
 {
     use HasFactory;
+
+    public static function from(AlbumDto $dto): Album
+    {
+        $entity = new static();
+        $entity->title = $dto->getTitle();
+        $entity->published = $dto->getPublished();
+        $entity->created_by = $dto->getUpdatedBy();
+        $entity->updated_by = $dto->getUpdatedBy();
+
+        return $entity;
+    }
 
     protected static function newFactory()
     {
